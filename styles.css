@@ -1,0 +1,118 @@
+/* --- MENU BAR --- */
+.menu-bar {
+    background-color: transparent;
+    transition: background-color 1s;
+    padding: 0;
+    height: 118px;
+}
+
+.menu-bar:hover {
+    background-color: white;
+}
+
+.menu-bar ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Spacing between all menu items */
+.menu-bar ul li {
+    margin-right: 20px;
+}
+
+/* --- LOGO --- */
+.logo-container a {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 100px;       /* logo height */
+    width: auto;        /* width adjusts automatically */
+}
+
+.logo-container .logo {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    height: 100%;
+    width: auto;
+    transition: opacity 0.5s;
+}
+
+.logo-container .logo.default {
+    opacity: 1;
+    z-index: 1;
+}
+
+.logo-container .logo.hover {
+    opacity: 0;
+    z-index: 2;
+}
+
+.menu-bar:hover .logo-container .logo.hover {
+    opacity: 1;
+}
+
+.menu-bar:hover .logo-container .logo.default {
+    opacity: 0;
+}
+
+/* --- MENU ITEMS --- */
+.menu-bar ul li a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    line-height: 80px;   /* align with logo */
+    padding: 0 16px;
+    font-family: Cinzel, sans-serif;
+    font-weight: 550;
+    font-size: 19px;
+    transition: color 0.5s;
+    padding-top: 8px;
+}
+
+.menu-bar:hover ul li a {
+    color: black;
+}
+
+/* First menu item spacing */
+.menu-bar ul li.menu-bar-text:first-child a {
+    margin-left: 24px;
+}
+
+/* --- PAGE BACKGROUND --- */
+body {
+    background-image: url("homeScreenImage.jpg");
+    background-repeat: no-repeat;
+    margin: 0;
+    height: 100vh;
+    background-size: cover;
+}
+
+#first-text {
+    padding-left: 60px;
+}
+
+#center-text{
+    font-family: Open Sans, sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 725px;
+    font-size: 45px;
+}
+
+.fa-solid {
+    font-size: 40px;
+    color: white;
+    margin-top: 20px;
+}
+
+.arrow-container{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
