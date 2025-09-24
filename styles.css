@@ -1,94 +1,117 @@
 /* --- MENU BAR --- */
 .menu-bar {
-    background-color: transparent;
-    transition: background-color 1s;
-    padding: 0;
-    height: 118px;
+  position: relative;
+  width: 100%;
+  height: 150px;
+  background-color: transparent;
+  z-index: 1000;
+  overflow: hidden; /* ensure pseudo-element stays inside */
 }
 
-.menu-bar:hover {
-    background-color: white;
+/* Create a pseudo-element for the gradient overlay */
+.menu-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(240, 225, 198, 1) 0%, rgba(240, 225, 198, 1) 70%, rgba(240, 225, 198, 0) 100%);
+  opacity: 0; /* start invisible */
+  transition: opacity 1s;
+  pointer-events: none; /* allow clicks to pass through */
+  z-index: -1;
 }
 
+.menu-bar:hover::before {
+  opacity: 1; /* fade in the gradient */
+}
+
+
+/* Menu list */
 .menu-bar ul {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 1000;
 }
 
-/* Spacing between all menu items */
+/* Spacing between menu items */
 .menu-bar ul li {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
-/* --- LOGO --- */
+/* Logo container */
 .logo-container a {
-    display: flex;
-    align-items: center;
-    position: relative;
-    height: 100px;       /* logo height */
-    width: auto;        /* width adjusts automatically */
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 100px;
+  width: auto;
 }
 
+/* Logo swap */
 .logo-container .logo {
-    position: absolute;
-    top: 8px;
-    left: 0;
-    height: 100%;
-    width: auto;
-    transition: opacity 0.5s;
+  position: absolute;
+  top: 8px;
+  left: 0;
+  height: 100%;
+  width: auto;
+  transition: opacity 0.5s;
 }
 
 .logo-container .logo.default {
-    opacity: 1;
-    z-index: 1;
+  opacity: 1;
+  z-index: 1;
 }
 
 .logo-container .logo.hover {
-    opacity: 0;
-    z-index: 2;
+  opacity: 0;
+  z-index: 2;
 }
 
 .menu-bar:hover .logo-container .logo.hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 .menu-bar:hover .logo-container .logo.default {
-    opacity: 0;
+  opacity: 0;
 }
 
-/* --- MENU ITEMS --- */
+/* Menu items */
 .menu-bar ul li a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    line-height: 80px;   /* align with logo */
-    padding: 0 16px;
-    font-family: Cinzel, sans-serif;
-    font-weight: 550;
-    font-size: 19px;
-    transition: color 0.5s;
-    padding-top: 8px;
+  display: block;
+  color: white;
+  text-decoration: none;
+  line-height: 80px;
+  padding: 0 16px;
+  font-family: Cinzel, sans-serif;
+  font-weight: 550;
+  font-size: 19px;
+  transition: color 0.5s;
+  padding-top: 8px;
 }
 
 .menu-bar:hover ul li a {
-    color: black;
+  color: black;
 }
 
 /* First menu item spacing */
 .menu-bar ul li.menu-bar-text:first-child a {
-    margin-left: 24px;
+  margin-left: 24px;
 }
+
 
 /* --- PAGE BACKGROUND --- */
 body {
     background-image: url("homeScreenImage.jpg");
     background-repeat: no-repeat;
     margin: 0;
-    height: 100vh;
     background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 #first-text {
@@ -96,13 +119,20 @@ body {
 }
 
 #center-text{
-    font-family: Open Sans, sans-serif;
+    font-family: Open Sans ,sans-serif;
     color: white;
+    font-size: 45px;
+    text-align: center;
+    transition: opacity 0.2s ease-out;
+    padding-top: 200px;
+}
+
+.hero{
+    height: 550px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 725px;
-    font-size: 45px;
+    background: url(homeScreenImage.jpg) center/cover no-repeat fixed;
 }
 
 .fa-solid {
@@ -115,4 +145,40 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    padding-top: 330px;
+
 }
+
+#first-block-image{
+    width: 48%;
+    border-radius: 10px;
+    display: block;
+    height: auto;
+    margin: 25px 25px;
+}
+.image-wrapper-one{
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.first-block{
+  /* replace background: white; with: */
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0) 0px,     /* top = transparent */
+    rgba(255,255,255,1) 40px,    /* fade to white by 50px */
+    rgba(255,255,255,1) 100%     /* solid white for the rest */
+  );
+  position: relative; /* keep this if you need it */
+  margin-top: 200px;
+}
+
+/* Default: hide hamburger */
+.hamburger {
+    display: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
