@@ -85,3 +85,39 @@
     background-color: rgba(27, 58, 47, 0.95);
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
+
+/* Desktop: hide hamburger */
+#hamburger {
+    display: none;
+}
+
+/* Mobile */
+@media (max-width: 575px) {
+
+    /* Hide all menu items except hamburger */
+    .menu-bar ul li.menu-bar-text:not(#hamburger){
+        display: none;
+    }
+
+    /* Show hamburger */
+    #hamburger{
+        display: flex; /* now part of the flex layout */
+        align-items: center;
+        justify-content: center;
+        height: 80px;  /* match other menu items */
+        margin-left: auto; /* push to right */
+    }
+
+    #hamburger i {
+        font-size: 30px;
+        color: white;
+    }
+
+    .menu-bar{
+        height: 70px;
+    }
+
+    .logo-container{
+        height: 70px;
+    }
+}
