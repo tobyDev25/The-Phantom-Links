@@ -6,6 +6,8 @@
     background-color: transparent;
     z-index: 1000;
     overflow: hidden; /* ensure pseudo-element stays inside */
+    display: flex;
+    align-items: center;
 }
 
 /* Create a pseudo-element for the gradient overlay */
@@ -29,7 +31,10 @@
     align-items: center;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 16px;
+    width: 100%;          /* full width for flex positioning */
+    height: 120px;        /* match menu bar desktop height */
+    position: relative;   /* stacking context */
     z-index: 1000;
 }
 
@@ -65,13 +70,11 @@
     display: block;
     color: white;
     text-decoration: none;
-    line-height: 80px;
-    padding: 0 16px;
+    line-height: 120px;
     font-family: Cinzel, sans-serif;
     font-weight: 550;
     font-size: 19px;
-    transition: color 0.5s;
-    padding-top: 8px;
+    padding: 0 16px;
 }
 .menu-bar:hover ul li a { color: white; }
 
@@ -91,33 +94,95 @@
     display: none;
 }
 
+/* Mobile menu hidden by default */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -250px;       /* hidden off-screen */
+  width: 200px;
+  height: 100%;
+  background-color: rgba(27,58,47,0.95);
+  display: flex;
+  flex-direction: column;
+  padding-top: 90px;   /* offset for navbar */
+  transition: right 0.3s ease-in-out; /* smooth slide */
+  z-index: 2000;
+  align-items: center;
+}
+
+.mobile-menu li {
+  list-style: none;
+  text-align: center;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-family: Cinzel, sans-serif;
+  margin: 15px 0;
+}
+
+.mobile-menu li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+/* Show menu when active */
+.mobile-menu.show {
+  right: 0;
+}
+
+/* Overlay hidden by default */
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1500;  /* below the menu (2000) but above rest */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+}
+
+/* Show overlay when active */
+.mobile-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out, visibility 0s linear 0s;
+}
+
+
+
+
 /* Mobile */
 @media (max-width: 575px) {
 
-    /* Hide all menu items except hamburger */
-    .menu-bar ul li.menu-bar-text:not(#hamburger){
+    /* Hide all menu items */
+    .menu-bar ul {
         display: none;
     }
 
     /* Show hamburger */
-    #hamburger{
-        display: flex; /* now part of the flex layout */
-        align-items: center;
-        justify-content: center;
-        height: 80px;  /* match other menu items */
-        margin-left: auto; /* push to right */
-    }
-
-    #hamburger i {
-        font-size: 30px;
+    #hamburger {
+        display: flex;           /* make it a flex container */
+        align-items: center;     /* vertical center */
+        justify-content: center; /* horizontal center */
+        position: absolute;      /* position it inside menu-bar */
+        top: 0;
+        right: 16px;             /* some padding from the right */
+        height: 90px;            /* match nav height */
+        width: 50px;             /* clickable area */
+        font-size: 30px;         /* size of ☰ */
         color: white;
+        cursor: pointer;
+        z-index: 3000;
     }
 
-    .menu-bar{
-        height: 70px;
+    .menu-bar {
+        height: 90px;
     }
 
-    .logo-container{
-        height: 70px;
+    .logo-container {
+        height: 90px;
     }
 }

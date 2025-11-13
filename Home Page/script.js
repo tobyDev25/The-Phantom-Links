@@ -1,3 +1,18 @@
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.querySelector('.mobile-menu');
+const overlay = document.querySelector('.mobile-overlay');
+
+hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('show');
+    overlay.classList.toggle('show');
+});
+
+overlay.addEventListener('click', () => {
+    mobileMenu.classList.remove('show');
+    overlay.classList.remove('show');
+});
+
+
 window.addEventListener("scroll", function () {
     const centerText = document.getElementById("center-text");
     const scrollY = window.scrollY;

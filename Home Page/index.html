@@ -1,207 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Phantom Links | Home</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-<script src="https://kit.fontawesome.com/12dd025e5e.js" crossorigin="anonymous"></script>
-<link rel="shortcut icon" href="favicon.png">
-<link rel="stylesheet" href="../header.css">
-</head>
-<body>
-<div class="menu-bar">
-      <div class="logo-container">
-            <a href="#">
-                <img src="logo.png" class="logo default" alt="Logo">
-            </a>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Phantom Links | Home</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/12dd025e5e.js" crossorigin="anonymous"></script>
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="../header.css">
+    </head>
+    <body>
+        <div class="menu-bar">
+            <div class="logo-container">
+                    <a href="#">
+                        <img src="logo.png" class="logo default" alt="Logo">
+                    </a>
+                </div>
+            <ul class="menu-items">
+                <li class="menu-bar-text" id="first-text"><a href="#">HOME</a></li>
+                <li class="menu-bar-text"><a href="#">ABOUT</a></li>
+                <li class="menu-bar-text"><a href="#">TRAVEL</a></li>
+                <li class="menu-bar-text"><a href="#">CONTACT</a></li>
+                <li class="menu-bar-text" id="members-login"><a href="../Member Sign Up/index.html">MEMBERS LOGIN</a></li>
+            </ul>
+
+            <div id="hamburger">&#9776;</div>
         </div>
-    <ul>
-      
-        <li class="menu-bar-text" id="first-text"><a href="#">HOME</a></li>
-        <li class="menu-bar-text"><a href="#">ABOUT</a></li>
-        <li class="menu-bar-text"><a href="#">TRAVEL</a></li>
-        <li class="menu-bar-text"><a href="#">CONTACT</a></li>
-        <li class="menu-bar-text" id="members-login"><a href="../Member Sign Up/index.html">MEMBERS LOGIN</a></li>
-        <li><i class="fa-solid fa-bars" id="hamburger"></i></li>
-    </ul>
-</div>
 
-<div class="hero">
-    <h2 id="center-text">No Maps. No Templates. Just You and the Links.</h2>
-    <h3 id="center-text-2">
-        Tailored golf travel packages for discening executives who demand the finest courses, accomodations and experiences.
-    </h3>
-    <button id="pye-button">Plan Your Experience</button>
-</div>
 
-<div class="arrow-container">
-    <i class="fa-solid fa-angle-down" id="arrow"></i>
-</div>
+        <!-- Slide-out menu -->
+        <div class="mobile-menu">
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">ABOUT</a></li>
+                <li><a href="#">TRAVEL</a></li>
+                <li><a href="#">CONTACT</a></li>
+                <li><a href="#">MEMBERS LOGIN</a></li>
+            </ul>
+        </div>
 
-<div class="rest-of-page">
-    <!-- Section 1 -->
-    <div class="section-1">
-        <h2 id="s1-t1">Curated Scottish Golf Experiences for the Discerning Executive</h2>
-        <p id="s1-t2">
-            Discover Scotland’s legendary links and championship courses, where history, luxury, and impeccable service come together.
-            Each journey is tailored to provide the ultimate executive golf experience — from private tee times to world-class accommodations and fine dining
-        </p>
-        <div class="carousel-container">
-            <div class="carousel-slide">
-                <!-- Trip Card 1 -->
-                <div class="trip-card">
-                    <img src="carousel-img-1.jpg" alt="Classic Scottish Links Tour">
-                    <div class="trip-info">
-                        <h3 class="carousel-heading">Classic Scottish Links Tour</h3>
-                        <p class="carousel-text">Play Scotland’s iconic courses with unrivalled access and personal guides.</p>
-                        <ul class="carousel-text">
-                            <li>Private tee times at St Andrews, Carnoustie, Royal Troon</li>
-                            <li>5-star accommodations in castles & boutique hotels</li>
-                            <li>Gourmet dinners & whisky tastings</li>
+        <!-- Overlay -->
+        <div class="mobile-overlay"></div>
+
+
+        <div class="hero">
+            <h2 id="center-text">No Maps. No Templates. Just You and the Links.</h2>
+            <h3 id="center-text-2">
+                Tailored golf travel packages for discening executives who demand the finest courses, accomodations and experiences.
+            </h3>
+            <button id="pye-button">Plan Your Experience</button>
+        </div>
+
+        <div class="arrow-container">
+            <i class="fa-solid fa-angle-down" id="arrow"></i>
+        </div>
+
+        <div class="rest-of-page">
+            <!-- Section 1 -->
+            <div class="section-1">
+                <h2 id="s1-t1">Curated Scottish Golf Experiences for the Discerning Executive</h2>
+                <p id="s1-t2">
+                    Discover Scotland’s legendary links and championship courses, where history, luxury, and impeccable service come together.
+                    Each journey is tailored to provide the ultimate executive golf experience — from private tee times to world-class accommodations and fine dining
+                </p>
+                <div class="carousel-container">
+                    <div class="carousel-slide">
+                        <!-- Trip Card 1 -->
+                        <div class="trip-card">
+                            <img src="carousel-img-1.jpg" alt="Classic Scottish Links Tour">
+                            <div class="trip-info">
+                                <h3 class="carousel-heading">Classic Scottish Links Tour</h3>
+                                <p class="carousel-text">Play Scotland’s iconic courses with unrivalled access and personal guides.</p>
+                                <ul class="carousel-text">
+                                    <li>Private tee times at St Andrews, Carnoustie, Royal Troon</li>
+                                    <li>5-star accommodations in castles & boutique hotels</li>
+                                    <li>Gourmet dinners & whisky tastings</li>
+                                </ul>
+                                <a href="#" class="btn">Discover This Tour</a>
+                            </div>
+                        </div>
+                        <!-- Trip Card 2 -->
+                        <div class="trip-card">
+                            <img src="carousel-img-2.jpg" alt="Highlands & Hidden Gems Experience">
+                            <div class="trip-info">
+                                <h3 class="carousel-heading">Highlands & Hidden Gems Experience</h3>
+                                <p class="carousel-text">Explore Scotland’s breathtaking highlands and exclusive courses few get to play.</p>
+                                <ul class="carousel-text">
+                                    <li>Hidden & private links in the Highlands</li>
+                                    <li>Luxury lodges with spa & fine dining</li>
+                                    <li>Helicopter transfers & local golf guides</li>
+                                </ul>
+                                <a href="#" class="btn">Plan Your Highland Escape</a>
+                            </div>
+                        </div>
+                        <!-- Trip Card 3 -->
+                        <div class="trip-card">
+                            <img src="carousel-img-3.jpg" alt="Edinburgh & East Coast Elite Tour">
+                            <div class="trip-info">
+                                <h3 class="carousel-heading">Edinburgh & East Coast Elite Tour</h3>
+                                <p class="carousel-text">Combine culture, history, and world-class golf on Scotland’s east coast.</p>
+                                <ul class="carousel-text">
+                                    <li>Play iconic courses like Muirfield & Gullane</li>
+                                    <li>Boutique city hotels & private coastal retreats</li>
+                                    <li>Exclusive dining & networking events</li>
+                                </ul>
+                                <a href="#" class="btn">Book This Experience</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Carousel Controls -->
+                    <button class="carousel-prev" aria-label="Previous slide">&#10094;</button>
+                    <button class="carousel-next" aria-label="Next slide">&#10095;</button>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="section-2">
+                <h2 id="s2-t1">Luxury access and a seamless service - crafted in Scotland.</h2>
+                <p id="s2-t2">
+                    At The Phantom Links, we design bespoke Scottish golf journeys for guests who value privacy, precision, and exceptional detail.
+                    Every trip is curated with insider access and handled by our expert team on the ground in Scotland.
+                </p>
+            </div>
+
+            <!-- Pillars -->
+            <div class="pillars-grid">
+                <div class="pillar">
+                    <img src="icon1.png" alt="Golf Icon" class="pillar-icon">
+                    <h3>Exclusive Course Access</h3>
+                    <p>Priority tee times across Scotland’s legendary and private links.</p>
+                </div>
+                <div class="pillar">
+                    <img src="icon2.png" alt="Travel Icon" class="pillar-icon">
+                    <h3>Bespoke Itineraries</h3>
+                    <p>Tailor-made journeys for the executive traveller.</p>
+                </div>
+                <div class="pillar">
+                    <img src="icon3.png" alt="Transport Icon" class="pillar-icon">
+                    <h3>Luxury Transfers & Stays</h3>
+                    <p>Hand-selected hotels, estates, and private chauffeurs.</p>
+                </div>
+                <div class="pillar">
+                    <img src="icon4.png" alt="Host Icon" class="pillar-icon">
+                    <h3>Dedicated Scottish Hosts</h3>
+                    <p>On-the-ground support from arrival to departure.</p>
+                </div>
+            </div>
+
+            <br>
+            <h2>Bespoke Golf, Unforgettable Memories</h2>
+
+            <!-- Reviews -->
+            <div class="reviews">
+                <img src="review-img.jpg" alt="" id="review-image">
+                <div class="reviews-text">
+                    <p><i>"The Scotland tour exceeded every expectation — the courses, the villas, the service. Truly unforgettable."</i> – C. Reynolds</p>
+                    <p><i>"From start to finish, every detail was tailored to perfection. The attention to our preferences made it effortless and exclusive."</i> – M. Patel</p>
+                    <p><i>"A bespoke golf experience like no other. Private courses, luxury villas, and concierge service that anticipates your every need."</i> – S. Thompson</p>
+                </div>
+            </div>
+
+            <br>
+
+            <!-- Contact Section -->
+            <div class="contact-section">
+                <div class="contact-background">
+                    <h2>Ready to Experience the Ultimate Executive Golf Journey?</h2>
+                    <p>Let us craft your bespoke itinerary, tailored to your preferences and schedule.</p>
+                    <form class="contact-form" action="submit-form.php" method="POST">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <input type="text" name="destination" placeholder="Preferred Destination/Interest">
+                        <input type="text" name="dates" placeholder="Preferred Dates">
+                        <textarea name="message" rows="4" placeholder="Your Message"></textarea>
+                        <button type="submit" class="btn">Submit Your Enquiry</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="site-footer">
+                <div class="footer-container">
+                    <div class="footer-brand">
+                        <img src="logo.png" alt="The Phantom Links" class="footer-logo">
+                    </div>
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Travel</a></li>
+                            <li><a href="#">Contact</a></li>
                         </ul>
-                        <a href="#" class="btn">Discover This Tour</a>
+                    </div>
+                    <div class="footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>Email: <a href="mailto:info@phantomlinks.com">info@phantomlinks.com</a></p>
+                        <p>Phone: <a href="tel:+441234567890">+44 1234 567890</a></p>
+                        <p>Address: 123 Golf Lane, St Andrews, Scotland</p>
+                    </div>
+                    <div class="footer-social">
+                        <h4>Follow Us</h4>
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
                     </div>
                 </div>
-                <!-- Trip Card 2 -->
-                <div class="trip-card">
-                    <img src="carousel-img-2.jpg" alt="Highlands & Hidden Gems Experience">
-                    <div class="trip-info">
-                        <h3 class="carousel-heading">Highlands & Hidden Gems Experience</h3>
-                        <p class="carousel-text">Explore Scotland’s breathtaking highlands and exclusive courses few get to play.</p>
-                        <ul class="carousel-text">
-                            <li>Hidden & private links in the Highlands</li>
-                            <li>Luxury lodges with spa & fine dining</li>
-                            <li>Helicopter transfers & local golf guides</li>
-                        </ul>
-                        <a href="#" class="btn">Plan Your Highland Escape</a>
-                    </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 The Phantom Links. All Rights Reserved.</p>
                 </div>
-                <!-- Trip Card 3 -->
-                <div class="trip-card">
-                    <img src="carousel-img-3.jpg" alt="Edinburgh & East Coast Elite Tour">
-                    <div class="trip-info">
-                        <h3 class="carousel-heading">Edinburgh & East Coast Elite Tour</h3>
-                        <p class="carousel-text">Combine culture, history, and world-class golf on Scotland’s east coast.</p>
-                        <ul class="carousel-text">
-                            <li>Play iconic courses like Muirfield & Gullane</li>
-                            <li>Boutique city hotels & private coastal retreats</li>
-                            <li>Exclusive dining & networking events</li>
-                        </ul>
-                        <a href="#" class="btn">Book This Experience</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Carousel Controls -->
-            <button class="carousel-prev" aria-label="Previous slide">&#10094;</button>
-            <button class="carousel-next" aria-label="Next slide">&#10095;</button>
+            </footer>
         </div>
-    </div>
 
-    <!-- Section 2 -->
-    <div class="section-2">
-        <h2 id="s2-t1">Luxury access and a seamless service - crafted in Scotland.</h2>
-        <p id="s2-t2">
-            At The Phantom Links, we design bespoke Scottish golf journeys for guests who value privacy, precision, and exceptional detail.
-            Every trip is curated with insider access and handled by our expert team on the ground in Scotland.
-        </p>
-    </div>
-
-    <!-- Pillars -->
-    <div class="pillars-grid">
-        <div class="pillar">
-            <img src="icon1.png" alt="Golf Icon" class="pillar-icon">
-            <h3>Exclusive Course Access</h3>
-            <p>Priority tee times across Scotland’s legendary and private links.</p>
-        </div>
-        <div class="pillar">
-            <img src="icon2.png" alt="Travel Icon" class="pillar-icon">
-            <h3>Bespoke Itineraries</h3>
-            <p>Tailor-made journeys for the executive traveller.</p>
-        </div>
-        <div class="pillar">
-            <img src="icon3.png" alt="Transport Icon" class="pillar-icon">
-            <h3>Luxury Transfers & Stays</h3>
-            <p>Hand-selected hotels, estates, and private chauffeurs.</p>
-        </div>
-        <div class="pillar">
-            <img src="icon4.png" alt="Host Icon" class="pillar-icon">
-            <h3>Dedicated Scottish Hosts</h3>
-            <p>On-the-ground support from arrival to departure.</p>
-        </div>
-    </div>
-
-    <br>
-    <h2>Bespoke Golf, Unforgettable Memories</h2>
-
-    <!-- Reviews -->
-    <div class="reviews">
-        <img src="review-img.jpg" alt="" id="review-image">
-        <div class="reviews-text">
-            <p><i>"The Scotland tour exceeded every expectation — the courses, the villas, the service. Truly unforgettable."</i> – C. Reynolds</p>
-            <p><i>"From start to finish, every detail was tailored to perfection. The attention to our preferences made it effortless and exclusive."</i> – M. Patel</p>
-            <p><i>"A bespoke golf experience like no other. Private courses, luxury villas, and concierge service that anticipates your every need."</i> – S. Thompson</p>
-        </div>
-    </div>
-
-    <br>
-
-    <!-- Contact Section -->
-    <div class="contact-section">
-        <div class="contact-background">
-            <h2>Ready to Experience the Ultimate Executive Golf Journey?</h2>
-            <p>Let us craft your bespoke itinerary, tailored to your preferences and schedule.</p>
-            <form class="contact-form" action="submit-form.php" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <input type="text" name="destination" placeholder="Preferred Destination/Interest">
-                <input type="text" name="dates" placeholder="Preferred Dates">
-                <textarea name="message" rows="4" placeholder="Your Message"></textarea>
-                <button type="submit" class="btn">Submit Your Enquiry</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-brand">
-                <img src="logo.png" alt="The Phantom Links" class="footer-logo">
-            </div>
-            <div class="footer-links">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Travel</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-contact">
-                <h4>Contact Us</h4>
-                <p>Email: <a href="mailto:info@phantomlinks.com">info@phantomlinks.com</a></p>
-                <p>Phone: <a href="tel:+441234567890">+44 1234 567890</a></p>
-                <p>Address: 123 Golf Lane, St Andrews, Scotland</p>
-            </div>
-            <div class="footer-social">
-                <h4>Follow Us</h4>
-                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 The Phantom Links. All Rights Reserved.</p>
-        </div>
-    </footer>
-</div>
-
-<script src="script.js"></script>
-</body>
+        <script src="script.js"></script>
+    </body>
 </html>
