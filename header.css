@@ -46,7 +46,7 @@
     display: flex;
     align-items: center;
     position: relative;
-    height: 100px;
+    height: 120px;
     width: auto;
     padding-left: 0;
 }
@@ -183,7 +183,8 @@
         height: 90px;
     }
 
-    .logo-container {
+    .logo-container a{
         height: 90px;
+        top: 15px;
     }
 }
