@@ -180,11 +180,11 @@
     }
 
     .menu-bar {
-        height: 90px;
+        height: 80px;
     }
 
     .logo-container a{
-        height: 90px;
-        top: 15px;
+        height: 80px;
+        top: 20px;
     }
 }
