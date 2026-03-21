@@ -9,10 +9,16 @@
         <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;550;700;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/styles.css">
         <script src="https://kit.fontawesome.com/12dd025e5e.js" crossorigin="anonymous"></script>
-        <link rel="shortcut icon" href="assets/logoHover.png">
+        <link rel="shortcut icon" href="assets/favicon.png">
         <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/footer.css">
     </head>
     <body>
+
+        <video autoplay muted loop id="background-video">
+            <source src="assets/background-video.mp4">
+        </video>
+
         <div class="menu-bar">
             <div class="logo-container">
                     <a href="#">
@@ -21,7 +27,7 @@
                 </div>
             <ul class="menu-items">
                 <li class="menu-bar-text" id="first-text"><a href="#">HOME</a></li>
-                <li class="menu-bar-text"><a href="#">ABOUT</a></li>
+                <li class="menu-bar-text"><a href="about/index.html">ABOUT</a></li>
                 <li class="menu-bar-text"><a href="#">TRAVEL</a></li>
                 <li class="menu-bar-text"><a href="#">CONTACT</a></li>
                 <li class="menu-bar-text" id="members-login"><a href="../Member Sign Up/index.html">MEMBERS LOGIN</a></li>
@@ -47,18 +53,20 @@
 
 
         <div class="hero">
-            <h2 id="center-text">No Maps. No Templates. Just You and the Links.</h2>
-            <h3 id="center-text-2">
-                Tailored golf travel packages for discening executives who demand the finest courses, accomodations and experiences.
-            </h3>
-            <button id="pye-button">Plan Your Experience</button>
+            <div class="hero-content">
+                <h2 id="center-text">No Maps. No Templates. Just You and the Links.</h2>
+                <h3 id="center-text-2">
+                    Tailored golf travel packages for discening executives who demand the finest courses, accomodations and experiences.
+                </h3>
+                <button id="pye-button">Plan Your Experience</button>
+            </div>   
         </div>
 
         <div class="arrow-container">
             <i class="fa-solid fa-angle-down" id="arrow"></i>
         </div>
 
-        <div class="rest-of-page">
+        <main class="rest-of-page">
             <!-- Section 1 -->
             <div class="section-1">
                 <h2 id="s1-t1">Curated Scottish Golf Experiences for the Discerning Executive</h2>
@@ -213,7 +221,7 @@
                     <p>&copy; 2025 The Phantom Links. All Rights Reserved.</p>
                 </div>
             </footer>
-        </div>
+        </main>
 
         <script src="js/script.js"></script>
     </body>

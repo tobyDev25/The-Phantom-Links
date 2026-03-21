@@ -1,34 +1,71 @@
 /* --- PAGE BACKGROUND --- */
 body {
-    background-image: url("../assets/homeScreenImage.png");
-    background-repeat: no-repeat;
     margin: 0;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
 }
 
+main{
+    position: relative;
+    z-index: 1;
+}
+
+#background-video{
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+body::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: -1;
+}
+
+.hero{
+    height: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.hero-content{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 70%;
+}
+
+/* Main heading */
 #center-text{
     font-family: Cinzel, sans-serif;
-}
-
-#center-text, #center-text-2 {
     color: white;
     font-size: 45px;
-    text-align: center;
     transition: opacity 0.2s ease-out;
-    margin-top:25%;
-    position: fixed;
+    margin-bottom: 15px;
 }
 
+/* Subheading */
 #center-text-2{
-    font-family: Open Sans ,sans-serif;
+    font-family: Open Sans, sans-serif;
     font-size: 20px;
-    margin-top: 35%;
-    width: 70%;
     font-weight: 400;
+    color: white;
+    transition: opacity 0.2s ease-out;
+    margin-bottom: 25px;
 }
 
+/* Button */
 .hero button{
     border-radius: 30px;
     background-color: #1b3a2f;
@@ -37,10 +74,9 @@ body {
     font-size: 16px;
     color: white;
     padding: 8px 15px;
-    margin-top: 45%;
     box-shadow: 0 5px rgba(0, 0, 0, 0.1);
-    position: fixed;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
 }
 
 .hero button:hover{
@@ -48,28 +84,19 @@ body {
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
-.hero{
-    height: 550px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.fa-solid {
-    font-size: 40px;
-    color: white;
-    margin-top: 10%;
-    transition: opacity 0.2s ease-out;
-}
-
+/* Arrow */
 .arrow-container{
-    justify-content: center;
-    align-items: center;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
 }
 
-#arrow{
-    margin-top: 22%;
+.fa-solid{
+    font-size: 40px;
+    color: white;
+    transition: opacity 0.2s ease-out;
 }
 
 .section-1{
@@ -88,6 +115,9 @@ h2{
 
 .rest-of-page{
     background-color: rgba(240, 225, 198, 0.6);
+    top: 100vh;
+    width: 100%;
+    position: absolute;
 }
 
 #s1-t2{
@@ -285,34 +315,7 @@ h2{
 }
 .contact-form button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
 
-.site-footer {
-    background-color: #1b3a2f;
-    color: white;
-    font-family: 'Open Sans', sans-serif;
-    padding: 60px 20px 20px 20px;
-}
-.footer-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 40px;
-}
-.footer-brand { flex: 1 1 200px; display: flex; align-items: center; }
-.footer-logo { width: 150px; }
-.footer-links, .footer-contact, .footer-social { flex: 1 1 200px; }
-.footer-links h4, .footer-contact h4, .footer-social h4 { font-family: Cinzel, serif; font-size: 18px; margin-bottom: 10px; }
-.footer-links ul { list-style: none; padding: 0; margin: 0; }
-.footer-links li { margin-bottom: 8px; }
-.footer-links a { color: white; text-decoration: none; transition: color 0.2s ease; }
-.footer-links a:hover { color: #7FC078; }
-.footer-contact p { margin-bottom: 8px; }
-.footer-contact a { color: white; text-decoration: none; }
-.footer-contact a:hover { color: #7FC078; }
-.footer-social a { margin-right: 15px; color: white; font-size: 20px; transition: color 0.2s ease; }
-.footer-social a:hover { color: #7FC078; }
-.footer-bottom { text-align: center; padding: 20px 0 0 0; border-top: 1px solid rgba(255,255,255,0.2); font-size: 14px; color: rgba(255,255,255,0.7); }
+
 
 body{
   overflow-x: hidden;

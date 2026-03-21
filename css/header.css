@@ -24,6 +24,7 @@
     transition: opacity 0.5s ease-in-out;
     pointer-events: none;
     z-index: 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 .menu-bar:hover::before {
     opacity: 1;
@@ -42,7 +43,7 @@
     height: 100%;
     position: relative;
     z-index: 2;
-    transition: transform 0.2s ease-in-out
+    transition: transform 0.2s ease-in-out;
 }
 
 .logo-container .logo {
