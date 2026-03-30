@@ -101,7 +101,8 @@ body::after{
 
 .section-1{
     text-align: center;
-    width: 70%;
+    max-width: 1700px;
+    width: calc(100% - 40px);
     margin: 0 auto;
 }
 
@@ -127,13 +128,6 @@ h2{
     padding-bottom: 10px;
 }
 
-.trip-carousel {
-    margin: 0 auto;
-    padding: 4rem 2rem;
-    text-align: center;
-    font-family: 'Georgia', serif;
-}
-
 .section-title {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
@@ -146,74 +140,142 @@ h2{
     color: #555;
 }
 
-.carousel-cc {
+.tc-container{
+    background-color: rgba(27, 58, 47, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 1700px;
+    width: calc(100% - 40px);
+    margin: 0 auto;
+    border-radius: 20px;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.tc-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    justify-items: center;
+    align-items: start;
+    padding: 50px 40px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.tc-container h3{
+    font-family: Open sans, sans-serif;
+    color: white;
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+#tc-h3{
+    font-weight: normal;
+}
+
+.block {
+    background-color: #636b2f;
+    padding: 20px;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
-    width: 100%;
-}
-
-.carousel-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    max-width: 1100px;
-}
-
-.carousel-slide { display: flex; transition: transform 0.5s ease-in-out; }
-
-.trip-card {
-    min-width: 100%;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    border-radius: 12px;
-    overflow: hidden;
-    background: #fff;
-    margin: 0;
-    text-align: left;
-}
-
-.trip-card img { width: 100%; height: 300px; object-fit: cover; }
-
-.trip-info { padding: 1.5rem; }
-.trip-info h3 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #1b3a2f; }
-.trip-info p { margin-bottom: 1rem; color: #333; }
-.trip-info ul { list-style-type: disc; margin-left: 1rem; margin-bottom: 1rem; }
-
-.btn {
-    display: inline-block;
-    padding: 0.7rem 1.5rem;
-    background-color: #1b3a2f;
-    color: #fff;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 3px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    font-family: Cinzel, sans-serif;
-}
-
-.btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-
-.carousel-prev, .carousel-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: #1b3a2f;
-    color: #fff;
-    border: none;
-    font-size: 2rem;
-    padding: 0.5rem 1rem;
+    align-items: center;
+    flex-direction: column;
+    min-height: 280px;
+    max-width: 500px;
+    text-align: center;
+    color: white;
     cursor: pointer;
-    border-radius: 50%;
-    z-index: 1000;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
 }
 
-.carousel-prev { left: 10px; }
-.carousel-next { right: 10px; }
-.carousel-prev:hover, .carousel-next:hover{ transform: translateY(calc(-50% - 3px)); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+#block-1{
+    background-image: url("../assets/block1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
 
-.carousel-heading{ font-family: Cinzel, sans-serif; }
-.carousel-text{ font-family: Open Sans, sans-serif; }
+#block-2{
+    background-image: url(../assets/block2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#block-3{
+    background-image: url(../assets/block3.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Add overlay */
+.block::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4); /* adjust opacity as needed */
+    z-index: 0; /* behind text */
+    border-radius: 10px; /* match block border radius */
+}
+
+/* Make text and h3 above overlay */
+.block h3,
+.block p {
+    position: relative;
+    z-index: 1;
+}
+
+.tc-grid h3 { font-size: 23px ;grid-row: 2; margin: 0; min-height: 2.8rem; display: flex; align-items: center; justify-content: center; text-align: center; width: 100%; padding: 0; font-family: Cinzel, sans-serif; color: #fff; transition: transform 0.3s ease; overflow: hidden;}
+.tc-grid h3, .tc-grid p { box-sizing: border-box; }
+
+.block:hover {
+    min-height: 280px;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.block p {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s ease, max-height 0.4s ease;
+    font-family: Open Sans, sans-serif;
+}
+
+.block:hover p {
+    opacity: 1;
+    max-height: 150px;
+}
+
+.block:hover h3 {
+    transform: translateY(-5px);
+}
+
+.block::after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 0.1rem;
+    background: rgba(255,255,255, 1);
+    margin: 12px auto;
+    transition: width 0.3s ease;
+    border-radius: 10px;
+}
+
+.block:hover::after {
+    width: 60px;
+}
+
 
 .section-1::after{ content: " "; height: 3vh; display: block; width: 100%; }
 
