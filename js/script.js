@@ -54,32 +54,6 @@ window.addEventListener("scroll", () => {
     }
 });
 
-const carouselSlide = document.querySelector('.carousel-slide');
-const tripCards = document.querySelectorAll('.trip-card');
-const prevBtn = document.querySelector('.carousel-prev');
-const nextBtn = document.querySelector('.carousel-next');
-let currentIndex = 0;
-const totalCards = tripCards.length;
-
-function updateCarousel() {
-    const width = tripCards[0].clientWidth;
-    carouselSlide.style.transform = `translateX(-${currentIndex * width}px)`;
-}
-
-nextBtn.addEventListener('click', () => {
-    currentIndex++;
-    if (currentIndex >= totalCards) { currentIndex = 0; }
-    updateCarousel();
-});
-
-prevBtn.addEventListener('click', () => {
-    currentIndex--;
-    if (currentIndex < 0) { currentIndex = totalCards - 1; }
-    updateCarousel();
-});
-
-window.addEventListener('resize', updateCarousel);
-
 document.addEventListener("DOMContentLoaded", function() {
     const quotes = document.querySelectorAll(".reviews-text p");
     const image = document.getElementById("review-image");
