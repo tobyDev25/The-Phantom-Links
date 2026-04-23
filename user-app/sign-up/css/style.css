@@ -1,0 +1,269 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- MENU BAR --- */
+.menu-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background-color: transparent;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: box-shadow 0.5s;
+}
+
+/* Logo */
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.2s ease-in-out;
+}
+
+.logo-container .logo {
+    max-height: 100px;
+    transition: opacity 0.5s ease;
+}
+
+.logo-container:hover{
+    transform: translateY(-3px);
+}
+
+
+/* --- Mobile --- */
+@media (max-width: 575px) {
+    .menu-bar {
+        height: 80px;
+    }
+
+    .logo-container a {
+        height: 80px;
+    }
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    background: linear-gradient(
+        135deg,
+        #061611 0%,
+        #0f2a22 30%,
+        #1b3a2f 60%,
+        #2f5e4b 100%
+    );
+
+    font-family: "Open Sans", sans-serif;
+}
+
+/* layout */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 120px;
+}
+
+.login-section-container {
+    width: 60vw;
+    max-width: 1200px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+
+    background: rgba(99, 107, 47, 0.4);
+    backdrop-filter: blur(12px);
+
+    padding: 40px;
+    border-radius: 20px;
+}
+
+/* image */
+.image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+/* form */
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-section h2 {
+    color: white;
+    font-family: "Cinzel", serif;
+}
+
+.form-section p {
+    color: white;
+    font-size: 14px;
+    font-family: Open Sans, sans-serif;
+}
+
+.form-section a{
+    color: #7FC078;
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.15s ease-in-out;
+}
+
+.form-section a:hover{
+    transform: translateY(-3px);
+}
+
+/* inputs */
+.form-section input {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+/* button */
+.form-section button {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+
+    background: #c2a878;
+    font-weight: bold;
+    cursor: pointer;
+
+    font-family: "Cinzel", serif;
+}
+
+.form-section button:hover {
+    background: #e5c88b;
+}
+
+/* strength */
+.strength-bars {
+    display: flex;
+    gap: 5px;
+}
+
+.bar {
+    height: 6px;
+    flex: 1;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+#strengthText {
+    font-size: 13px;
+    color: white;
+}
+
+/* rules */
+.pw-rules {
+    font-size: 12px;
+    color: #ff4d4d;
+    padding-left: 18px;
+}
+
+.pw-rules li {
+    color: #ff4d4d;
+    transition: 0.2s ease;
+}
+
+/* NOT MET */
+.pw-rules li.invalid {
+    color: #ff4d4d;
+}
+
+/* MET */
+.pw-rules li.valid {
+    color: #4dff88;
+}
+
+/* footer */
+.site-footer {
+    background: rgba(99, 107, 47, 0.4);
+    color: white;
+    text-align: center;
+    padding: 12px;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+    .login-section-container {
+        grid-template-columns: 1fr;
+        width: 90vw;
+    }
+}
+
+
+
+/* =========================
+   PASSWORD STRENGTH STATES
+========================= */
+
+.bar {
+    background: rgba(255,255,255,0.2);
+}
+
+/* smooth transitions already good, but reinforce */
+.bar {
+    transition: background 0.25s ease;
+}
+
+/* optional visual improvement */
+.strength-bars {
+    margin-top: 5px;
+}
+
+/* stronger visual hierarchy */
+#strengthText {
+    margin-top: 2px;
+    font-weight: 600;
+}
+
+/* optional spacing fix so it feels cleaner */
+.pw-rules {
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.password-field input {
+    width: 100%;
+    padding-right: 40px; /* space for eye icon */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgba(0,0,0,0.5);
+    transition: 0.2s;
+}
+
+.toggle-password:hover {
+    color: black;
+}
