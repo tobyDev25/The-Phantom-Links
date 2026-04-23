@@ -16,4 +16,6 @@ document.getElementById("createTripBtn").addEventListener("click", async () => {
     await addDoc(collection(db, "users", userId, "trips"), trip);
 
     alert("Trip created for user: " + userId);
+
+    
 });
