@@ -1,7 +1,7 @@
-import { auth, db } from "../../firebase-config.js";
+import { auth, db } from "../../../firebase-config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
-import { updateDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 /* =========================
    AUTH + LOAD USER DATA
@@ -36,6 +36,35 @@ onAuthStateChanged(auth, async (user) => {
     nameEl.innerText = data.firstName || "No name";
     emailEl.innerText = data.email || user.email;
     phoneEl.innerText = data.phone || "No phone";
+
+
+
+    const tripsContainer = document.getElementById("tripsContainer");
+
+    const tripsRef = collection(db, "users", user.uid, "trips");
+    const snapshot = await getDocs(tripsRef);
+
+    tripsContainer.innerHTML = "";
+
+    if (snapshot.empty) {
+        tripsContainer.innerHTML = "<p>No trips yet</p>";
+    } else {
+        snapshot.forEach((doc) => {
+            const trip = doc.data();
+
+            const card = document.createElement("div");
+            card.classList.add("trip-card");
+
+            card.innerHTML = `
+                <h4>${trip.name}</h4>
+                <p>📍 ${trip.location}</p>
+                <p>📅 ${trip.date}</p>
+                <p>Status: ${trip.status}</p>
+            `;
+
+            tripsContainer.appendChild(card);
+        });
+    }
 });
 
 /* =========================
