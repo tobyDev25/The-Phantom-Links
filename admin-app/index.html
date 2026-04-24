@@ -3,9 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin App Home</title>
+    <title>Admin Dashboard - Users</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">   
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-    <a href="create-trip/index.html">create trip</a>
+
+<div class="layout">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+    <div class="sidebar">
+
+        <h2>Admin Panel</h2>
+
+        <nav>
+            <a href="/admin-app/dashboard/index.html">Users</a>
+            <a href="#">Trips</a>
+        </nav>
+
+        <button id="logoutBtn">Logout</button>
+
+    </div>
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+    <div class="main">
+
+        <h1>Users</h1>
+
+        <p>Manage all customers and create trips for them.</p>
+
+        <!-- =========================
+             USERS TABLE
+        ========================== -->
+        <div class="users-container">
+
+            <table class="user-table">
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="usersContainer">
+                    <!-- JS injects rows here -->
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     JS
+========================= -->
+<script type="module" src="js/admin-dashboard.js"></script>
+
 </body>
 </html>

@@ -1,7 +1,27 @@
 import { auth, db } from "../../firebase-config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+/* =========================
+   HELPERS
+========================= */
+function formatStatus(status) {
+    if (!status) return "Unknown";
+    return status.charAt(0).toUpperCase() + status.slice(1);
+}
+
+function getStatusColor(status) {
+    switch (status) {
+        case "planned":
+            return "#3498db";
+        case "in-progress":
+            return "#f39c12";
+        case "ready":
+            return "#2ecc71";
+        default:
+            return "#999";
+    }
+}
 
 /* =========================
    AUTH + LOAD USER DATA
@@ -28,17 +48,17 @@ onAuthStateChanged(auth, async (user) => {
         nameEl.innerText = "New User";
         emailEl.innerText = user.email;
         phoneEl.innerText = "Not set";
-        return;
+    } else {
+        const data = docSnap.data();
+
+        nameEl.innerText = data.firstName || "No name";
+        emailEl.innerText = data.email || user.email;
+        phoneEl.innerText = data.phone || "No phone";
     }
 
-    const data = docSnap.data();
-
-    nameEl.innerText = data.firstName || "No name";
-    emailEl.innerText = data.email || user.email;
-    phoneEl.innerText = data.phone || "No phone";
-
-
-
+    /* =========================
+       LOAD TRIPS
+    ========================= */
     const tripsContainer = document.getElementById("tripsContainer");
 
     const tripsRef = collection(db, "users", user.uid, "trips");
@@ -48,23 +68,32 @@ onAuthStateChanged(auth, async (user) => {
 
     if (snapshot.empty) {
         tripsContainer.innerHTML = "<p>No trips yet</p>";
-    } else {
-        snapshot.forEach((doc) => {
-            const trip = doc.data();
-
-            const card = document.createElement("div");
-            card.classList.add("trip-card");
-
-            card.innerHTML = `
-                <h4>${trip.name}</h4>
-                <p>📍 ${trip.location}</p>
-                <p>📅 ${trip.date}</p>
-                <p>Status: ${trip.status}</p>
-            `;
-
-            tripsContainer.appendChild(card);
-        });
+        return;
     }
+
+    snapshot.forEach((doc) => {
+        const trip = doc.data();
+
+        const status = (trip.status || "unknown").toLowerCase();
+
+        const card = document.createElement("div");
+        card.classList.add("trip-card");
+
+        const statusColor = getStatusColor(status);
+
+        card.innerHTML = `
+            <div class="trip-title">${trip.name}</div>
+            <div class="trip-meta">📍 ${trip.location}</div>
+            <div class="trip-meta">📅 ${trip.date}</div>
+            <div class="trip-meta">👥 ${trip.people || 0} people</div>
+
+            <div class="status" style="background:${statusColor}">
+                ${formatStatus(status)}
+            </div>
+        `;
+
+        tripsContainer.appendChild(card);
+    });
 });
 
 /* =========================
