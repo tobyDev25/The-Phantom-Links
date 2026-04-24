@@ -54,11 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
             message.innerText = `Trip created for ${selectedUserName}`;
             message.style.color = "#00e07a";
 
+            setTimeout(3000);
+
             // reset form
             document.getElementById("tripName").value = "";
             document.getElementById("tripLocation").value = "";
             document.getElementById("tripDate").value = "";
             document.getElementById("tripPeople").value = "";
+
+            windowwindow.location.href = "/index.html";
 
         } catch (err) {
             console.error(err);
