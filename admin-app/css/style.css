@@ -153,3 +153,58 @@ body {
 .table-btn:hover {
     background: #d8bf91;
 }
+
+/* MODAL BACKGROUND */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* MODAL BOX */
+.modal-content {
+    width: 400px;
+    background: #0f2a22;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid rgba(194,168,120,0.3);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+    float: right;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* INPUTS */
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.3);
+    color: white;
+}
+
+/* BUTTON */
+#saveTripBtn {
+    margin-top: 12px;
+    padding: 10px;
+    width: 100%;
+    background: #c2a878;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#saveTripBtn:hover {
+    background: #d8bf91;
+}

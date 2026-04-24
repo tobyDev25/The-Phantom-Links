@@ -65,6 +65,36 @@
 
 </div>
 
+
+<!-- CREATE TRIP MODAL -->
+<div id="tripModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close-btn" id="closeModal">&times;</span>
+
+        <h2>Create Trip</h2>
+        <p id="modalUserName">User: </p>
+
+        <input id="tripName" placeholder="Trip Name">
+        <input id="tripLocation" placeholder="Location">
+        <input id="tripDate" type="date">
+        <input id="tripPeople" type="number" placeholder="People">
+
+        <select id="tripStatus">
+            <option value="planned">Planned</option>
+            <option value="in-progress">In Progress</option>
+            <option value="ready">Ready</option>
+        </select>
+
+        <button id="saveTripBtn">Create Trip</button>
+
+        <p id="modalMessage"></p>
+
+    </div>
+
+</div>
+
 <!-- =========================
      JS
 ========================= -->

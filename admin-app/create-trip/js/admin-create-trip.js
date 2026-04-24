@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!selectedUserId) {
         alert("No user selected. Redirecting...");
-        window.location.href = "/admin-app/dashboard/index.html";
+        window.location.href = "/index.html";
         return;
     }
 
@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-
             await addDoc(
                 collection(db, "users", selectedUserId, "trips"),
                 {
@@ -54,7 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
             message.innerText = `Trip created for ${selectedUserName}`;
             message.style.color = "#00e07a";
 
-            setTimeout(3000);
+            // wait 3 seconds THEN redirect
+            setTimeout(() => {
+                window.location.href = "/index.html";
+            }, 3000);
 
             // reset form
             document.getElementById("tripName").value = "";
@@ -62,14 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("tripDate").value = "";
             document.getElementById("tripPeople").value = "";
 
-            windowwindow.location.href = "/index.html";
-
         } catch (err) {
             console.error(err);
             message.innerText = "Failed to create trip";
             message.style.color = "red";
         }
-
     });
 
 });
