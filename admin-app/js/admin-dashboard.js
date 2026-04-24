@@ -130,6 +130,7 @@ document.getElementById("saveTripBtn")?.addEventListener("click", async () => {
         /* SUCCESS UI */
         message.innerText = `Trip created for ${selectedUserName}`;
         message.style.color = "#00e07a";
+        message.style.textAlign = "center"
 
         /* RESET FORM */
         document.getElementById("tripName").value = "";
@@ -147,6 +148,7 @@ document.getElementById("saveTripBtn")?.addEventListener("click", async () => {
         console.error("Error creating trip:", err);
         message.innerText = "Failed to create trip";
         message.style.color = "red";
+        message.style.textAlign = "center"
     }
 
 });
