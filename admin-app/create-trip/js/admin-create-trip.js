@@ -1,4 +1,4 @@
-import { db } from "../../../firebase-config.js";
+import { db } from "../../firebase-config.js";
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 document.getElementById("createTripBtn").addEventListener("click", async () => {
@@ -17,5 +17,5 @@ document.getElementById("createTripBtn").addEventListener("click", async () => {
 
     alert("Trip created for user: " + userId);
 
-    
+
 });
