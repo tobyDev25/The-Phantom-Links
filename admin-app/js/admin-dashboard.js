@@ -59,5 +59,5 @@ window.selectUser = function (userId, fullName) {
     localStorage.setItem("selectedUser", userId);
     localStorage.setItem("selectedUserName", fullName || "Unknown user");
 
-    window.location.href = "/admin-app/create-trip/index.html";
+    window.location.href = "create-trip/index.html";
 };
