@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Users</title>
+    <title>The Phantom Links | Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">   
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -31,7 +31,31 @@
     <!-- =========================
          MAIN CONTENT
     ========================== -->
-    <div class="main">
+        <div class="main">
+
+                <div class="stats-grid">
+
+            <div class="stat-card">
+                <p>Total Users</p>
+                <h2 id="statUsers">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Total Trips</p>
+                <h2 id="statTrips">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>In Progress</p>
+                <h2 id="statInProgress">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Ready</p>
+                <h2 id="statReady">0</h2>
+            </div>
+
+        </div>
 
         <h1>Users</h1>
 
@@ -40,6 +64,9 @@
         <!-- =========================
              USERS TABLE
         ========================== -->
+
+        <input id="searchUsers" class="search-bar" placeholder="Search users...">
+
         <div class="users-container">
 
             <table class="user-table">
@@ -94,6 +121,8 @@
     </div>
 
 </div>
+
+<div id="toast-container"></div>
 
 <!-- =========================
      JS

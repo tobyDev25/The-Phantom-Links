@@ -6,28 +6,43 @@
 }
 
 body {
-    background: linear-gradient(135deg, #061611, #0f2a22, #1b3a2f);
+    background: radial-gradient(circle at top, #0f2a22, #061611 60%, #050c09);
     color: white;
-}
-
-/* layout */
-.layout {
-    display: flex;
     min-height: 100vh;
 }
 
-/* sidebar */
+/* =========================
+   LAYOUT
+========================= */
+.layout {
+    display: flex;
+    min-height: 100vh;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
 .sidebar {
     width: 250px;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(12px);
+
     padding: 30px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
 
 .sidebar h2 {
     font-family: "Cinzel", serif;
+    color: #c2a878;
 }
 
 .sidebar nav {
@@ -37,13 +52,14 @@ body {
 }
 
 .sidebar a {
-    color: white;
+    color: rgba(255,255,255,0.75);
     text-decoration: none;
-    opacity: 0.8;
+    transition: 0.2s;
 }
 
 .sidebar a:hover {
-    opacity: 1;
+    color: #c2a878;
+    padding-left: 4px;
 }
 
 /* logout */
@@ -54,12 +70,19 @@ body {
     background: #c2a878;
     cursor: pointer;
     border-radius: 6px;
+    transition: 0.2s;
 }
 
-/* main */
+#logoutBtn:hover {
+    background: #d8bf91;
+}
+
+/* =========================
+   MAIN
+========================= */
 .main {
     flex: 1;
-    padding: 40px;
+    padding: 30px;
 }
 
 .main h1 {
@@ -67,21 +90,24 @@ body {
     margin-bottom: 20px;
 }
 
-#name{
-    font-family: Cinzel, sans-serif;
+#name {
+    font-family: "Cinzel", serif;
 }
 
-/* cards */
+/* =========================
+   GRID LAYOUTS
+========================= */
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
 }
 
-.card {
-    background: rgba(255,255,255,0.08);
-    padding: 20px;
-    border-radius: 12px;
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
 .trips-grid {
@@ -91,18 +117,119 @@ body {
     margin-top: 10px;
 }
 
+/* =========================
+   BASE CARD SYSTEM
+========================= */
+.card,
+.stat-card,
 .trip-card {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 14px;
-    color: white;
-    transition: 0.2s ease;
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+
+    transition: 0.25s ease;
+
+    padding: 20px;
 }
 
+.card:hover,
+.stat-card:hover,
 .trip-card:hover {
     transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(194,168,120,0.25);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+}
+
+.card {
+    background: linear-gradient(
+        135deg,
+        rgba(194,168,120,0.10),
+        rgba(255,255,255,0.04)
+    );
+
+    padding: 22px;
+    border-radius: 16px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.45),
+        inset 0 0 0 1px rgba(255,255,255,0.03);
+
+    position: relative;
+    overflow: hidden;
+
+    transition: 0.3s ease;
+}
+
+/* subtle gold glow accent */
+.card::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    left: -60px;
+
+    width: 160px;
+    height: 160px;
+
+    background: radial-gradient(
+        circle,
+        rgba(194,168,120,0.25),
+        transparent 70%
+    );
+
+    filter: blur(12px);
+}
+
+/* hover lift (consistent with rest) */
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 30px 70px rgba(0,0,0,0.55),
+        inset 0 0 0 1px rgba(194,168,120,0.2);
+}
+
+/* make profile feel structured */
+.card h3 {
+    font-family: "Cinzel", serif;
+    color: #c2a878;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* text spacing improvement */
+.card p {
+    font-size: 13px;
+    opacity: 0.85;
+    margin: 6px 0;
+}
+
+/* =========================
+   STAT CARDS
+========================= */
+.stat-card {
+    padding: 18px;
+}
+
+.stat-card p {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.stat-card h2 {
+    font-size: 26px;
+    margin-top: 6px;
+    color: #c2a878;
+    font-family: "Cinzel", serif;
+}
+
+/* =========================
+   TRIP CARDS
+========================= */
+.trip-card {
+    padding: 16px;
 }
 
 .trip-title {
@@ -113,14 +240,269 @@ body {
 
 .trip-meta {
     font-size: 13px;
-    opacity: 0.8;
-    margin: 2px 0;
+    opacity: 0.7;
+    margin: 3px 0;
 }
 
 .status {
+    margin-top: 10px;
     display: inline-block;
-    margin-top: 8px;
-    padding: 4px 8px;
-    border-radius: 6px;
+    padding: 5px 10px;
+    border-radius: 999px;
     font-size: 12px;
+    font-weight: 600;
+}
+
+/* =========================
+   NEXT TRIP CARD (HERO)
+========================= */
+.next-trip-card {
+    position: relative;
+    overflow: hidden;
+
+    background: linear-gradient(135deg, #0b1a13, #0f2a22);
+    border: 1px solid rgba(194,168,120,0.25);
+
+    padding: 28px;
+    border-radius: 18px;
+
+    margin-bottom: 25px;
+
+    box-shadow: 0 25px 70px rgba(0,0,0,0.55);
+}
+
+.next-trip-card::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    right: -60px;
+
+    width: 180px;
+    height: 180px;
+
+    background: radial-gradient(
+        circle,
+        rgba(194,168,120,0.25),
+        transparent 70%
+    );
+
+    filter: blur(10px);
+}
+
+.next-trip-card h2 {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 10px;
+}
+
+.next-trip-card h1 {
+    font-family: "Cinzel", serif;
+    font-size: 32px;
+    color: #c2a878;
+    margin: 6px 0;
+}
+
+.next-trip-card p {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.countdown {
+    margin-top: 14px;
+    display: inline-block;
+
+    padding: 8px 14px;
+    border-radius: 999px;
+
+    background: rgba(194,168,120,0.12);
+    border: 1px solid rgba(194,168,120,0.25);
+
+    font-weight: 600;
+    font-size: 13px;
+
+    color: #c2a878;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.table-btn {
+    padding: 6px 10px;
+    background: #c2a878;
+    border: none;
+    border-radius: 6px;
+    color: #0b1a13;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.2s;
+}
+
+.table-btn:hover {
+    background: #d8bf91;
+}
+
+/* =========================
+   TRIP LIST (ADMIN)
+========================= */
+.trip-sublist {
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+}
+
+.trip-item {
+    padding: 10px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* =========================
+   MODAL
+========================= */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    width: 400px;
+    background: #0f2a22;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid rgba(194,168,120,0.3);
+}
+
+.close-btn {
+    float: right;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* inputs */
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+
+    background: rgba(0,0,0,0.3);
+    color: white;
+}
+
+/* save button */
+#saveTripBtn {
+    margin-top: 12px;
+    padding: 10px;
+    width: 100%;
+
+    background: #c2a878;
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+#saveTripBtn:hover {
+    background: #d8bf91;
+}
+
+/* =========================
+   STATUS SELECT (COLOURED)
+========================= */
+.status-select {
+    margin-top: 6px;
+    padding: 8px 12px;
+    width: 100%;
+
+    border-radius: 6px;
+    background: rgba(0,0,0,0.3);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.1);
+
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='white' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.5 7l4.5 4.5L14.5 7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+/* status colours */
+.status-select.planned {
+    border-color: #3498db;
+    color: #3498db;
+}
+
+.status-select.in-progress {
+    border-color: #f39c12;
+    color: #f39c12;
+}
+
+.status-select.ready {
+    border-color: #2ecc71;
+    color: #2ecc71;
+}
+
+/* =========================
+   TOASTS
+========================= */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 9999;
+}
+
+.toast {
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    min-width: 200px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+}
+
+.toast.success { background: #00c46a; }
+.toast.error { background: #e74c3c; }
+.toast.info { background: #3498db; }
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+/* =========================
+   SEARCH BAR
+========================= */
+.search-bar {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 15px;
+
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+
+    background: rgba(0,0,0,0.3);
+    color: white;
+}
+
+.search-bar::placeholder {
+    color: rgba(255,255,255,0.5);
 }

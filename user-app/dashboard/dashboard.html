@@ -33,9 +33,35 @@
 
         <h1>Welcome, <span id="name">Loading...</span></h1>
 
+        <div id="nextTripCard" class="next-trip-card" style="display:none;">
+            <h2>Your Next Trip</h2>
+            <h1 id="nextTripTitle">Loading...</h1>
+            <p id="nextTripDetails"></p>
+            <div id="nextTripCountdown" class="countdown"></div>
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <p>Total Trips</p>
+                <h2 id="statTotal">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Upcoming</p>
+                <h2 id="statUpcoming">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Ready</p>
+                <h2 id="statReady">0</h2>
+            </div>
+
+        </div>
+
         <div class="cards">
 
-            <div class="card">
+            <div class="card" id="profile">
                 <h3>Profile</h3>
                 <p>Email: <span id="email">Loading...</span></p>
                 <p>Phone: <span id="phone">Loading...</span></p>
