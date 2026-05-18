@@ -169,10 +169,10 @@ body {
     content: "";
     position: absolute;
     top: -60px;
-    left: -60px;
+    right: -60px;
 
-    width: 160px;
-    height: 160px;
+    width: 120px;
+    height: 120px;
 
     background: radial-gradient(
         circle,
@@ -180,7 +180,7 @@ body {
         transparent 70%
     );
 
-    filter: blur(12px);
+    filter: blur(10px);
 }
 
 /* hover lift (consistent with rest) */

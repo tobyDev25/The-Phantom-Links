@@ -120,7 +120,11 @@ onAuthStateChanged(auth, async (user) => {
     /* =========================
        SORT TRIPS (NEXT FIRST)
     ========================= */
-    tripsArray.sort((a, b) => new Date(a.date) - new Date(b.date));
+    tripsArray.sort((a, b) => {
+        if (!a.date) return 1;
+        if (!b.date) return -1;
+        return new Date(a.date) - new Date(b.date);
+    });
 
     /* =========================
        RENDER TRIPS
@@ -144,7 +148,7 @@ onAuthStateChanged(auth, async (user) => {
 
         // 🔥 MAKE CLICKABLE
         card.addEventListener("click", () => {
-            window.location.href = `../trip-details/index.html?tripId=${trip.id}`;
+            window.location.href = `/user-app/dashboard/trip-details/index.html?tripId=${trip.id}`;
         });
 
         tripsContainer.appendChild(card);

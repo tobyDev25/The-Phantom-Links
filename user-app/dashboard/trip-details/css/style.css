@@ -1,15 +1,149 @@
 body {
-    background: #061611;
+    background: linear-gradient(135deg, #061611, #0f2a22, #1b3a2f);
     color: white;
-    font-family: sans-serif;
+    font-family: "Open Sans", sans-serif;
+    background-repeat: no-repeat;
+    background-position: cover;
+    height: 100vh;
+    overflow: hidden;
 }
 
+/* layout */
 .container {
-    max-width: 600px;
+    max-width: 700px;
     margin: 60px auto;
+    padding: 20px;
 }
 
-button {
+/* back button */
+.back-btn {
     margin-bottom: 20px;
-    padding: 8px 12px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* main card */
+.trip-card {
+    background: linear-gradient(135deg, #0b1a13, #132f26);
+    padding: 30px;
+    border-radius: 18px;
+    border: 1px solid rgba(194,168,120,0.25);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+/* title */
+.trip-card h1 {
+    font-family: "Cinzel", serif;
+    font-size: 30px;
+    color: #c2a878;
+}
+
+/* meta */
+.trip-meta {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0.85;
+}
+
+/* status badge */
+.status-badge {
+    margin-top: 16px;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* actions */
+.actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+/* select */
+#statusSelect {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.3);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* delete */
+.danger {
+    background: #8b2d2d;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
+
+.danger:hover {
+    background: #a33a3a;
+}
+
+.itinerary-section {
+    margin-top: 30px;
+}
+
+.itinerary-section h2 {
+    font-family: "Cinzel", serif;
+    margin-bottom: 10px;
+    color: #c2a878;
+    padding: 20px;
+    font-size: 40px;
+}
+
+.itinerary-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+
+    transition: 0.2s;
+}
+
+.itinerary-item:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-2px);
+}
+
+.itinerary-day {
+    font-size: 12px;
+    opacity: 0.6;
+    margin-bottom: 4px;
+}
+
+.itinerary-title {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.itinerary-time {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.itinerary-notes {
+    font-size: 12px;
+    opacity: 0.6;
+    margin-top: 4px;
 }

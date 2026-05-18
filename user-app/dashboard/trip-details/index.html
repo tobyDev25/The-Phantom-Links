@@ -11,14 +11,37 @@
 
 <div class="container">
 
-    <button id="backBtn">← Back</button>
+    <button id="backBtn" class="back-btn">← Back</button>
 
-    <h1 id="tripName">Loading...</h1>
+    <h1>Trip Details</h1>
 
-    <p id="tripLocation"></p>
-    <p id="tripDate"></p>
-    <p id="tripPeople"></p>
-    <p id="tripStatus"></p>
+    <div class="trip-card">
+
+        <h1 id="tripName">Loading...</h1>
+
+        <div class="trip-meta">
+            <span id="tripLocation"></span>
+            <span id="tripDate"></span>
+            <span id="tripPeople"></span>
+        </div>
+
+        <div id="tripStatus" class="status-badge"></div>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+            <select id="statusSelect"></select>
+            <button id="deleteBtn" class="danger">Delete Trip</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="itinerary-section">
+
+    <h2>Itinerary</h2>
+
+    <div id="itineraryList"></div>
 
 </div>
 

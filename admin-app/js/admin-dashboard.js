@@ -5,66 +5,166 @@ import {
     addDoc,
     updateDoc,
     deleteDoc,
-    doc
+    doc,
+    onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 /* =========================
-   GLOBAL STATE
+   APP STATE (SOURCE OF TRUTH)
 ========================= */
-let selectedUserId = null;
-let selectedUserName = null;
-let expandedUsers = {};
+
+const state = {
+    users: {},      // userId → user data
+    trips: {},      // userId → [trips]
+    expanded: {},   // userId → boolean
+    stats: {
+        users: 0,
+        trips: 0,
+        inProgress: 0,
+        ready: 0
+    }
+};
+
+let tripListeners = {};
 
 /* =========================
-   STATS
+   SUBSCRIBE TO TRIPS
 ========================= */
 
-async function loadStats() {
+function subscribeToTrips(userId, container) {
 
-    let totalUsers = 0;
-    let totalTrips = 0;
-    let inProgress = 0;
-    let ready = 0;
+    const tripsRef = collection(db, "users", userId, "trips");
 
-    try {
+    // 🔥 prevent duplicate listeners
+    if (tripListeners[userId]) {
+        tripListeners[userId]();
+    }
 
-        const usersSnap = await getDocs(collection(db, "users"));
-        totalUsers = usersSnap.size;
+    tripListeners[userId] = onSnapshot(tripsRef, (snapshot) => {
 
-        for (const userDoc of usersSnap.docs) {
+        // reset state safely
+        state.trips[userId] = [];
 
-            const tripsSnap = await getDocs(
-                collection(db, "users", userDoc.id, "trips")
-            );
-
-            tripsSnap.forEach(tripDoc => {
-
-                const trip = tripDoc.data();
-
-                totalTrips++;
-
-                if (trip.status === "in-progress") inProgress++;
-                if (trip.status === "ready") ready++;
-            });
+        if (snapshot.empty) {
+            container.innerHTML = "<p style='opacity:0.6'>No trips yet</p>";
+            return;
         }
 
-        // UPDATE UI
-        document.getElementById("statUsers").innerText = totalUsers;
-        document.getElementById("statTrips").innerText = totalTrips;
-        document.getElementById("statInProgress").innerText = inProgress;
-        document.getElementById("statReady").innerText = ready;
+        snapshot.forEach(docSnap => {
 
-    } catch (err) {
-        console.error(err);
-        showToast("Failed to load stats", "error");
-    }
+            const trip = docSnap.data();
+
+            state.trips[userId].push({
+                id: docSnap.id,
+                ...trip
+            });
+        });
+
+        renderTrips(userId, container);
+    });
 }
 
 /* =========================
-   TOAST SYSTEM
+   RENDER TRIPS
+========================= */
+
+function renderTrips(userId, container) {
+
+    const trips = state.trips[userId];
+
+    container.innerHTML = "";
+
+    trips.forEach(trip => {
+
+        const status = trip.status || "planned";
+
+        const div = document.createElement("div");
+        div.className = `trip-item ${status}`;
+        div.dataset.id = trip.id;
+        div.dataset.status = status;
+
+        div.innerHTML = `
+            <div class="trip-top">
+
+                <div class="trip-info">
+
+                    <div class="editable"
+                        data-field="name"
+                        data-id="${trip.id}"
+                        data-user="${userId}">
+                        <strong>${trip.name}</strong>
+                    </div>
+
+                    <div class="editable"
+                        data-field="location"
+                        data-id="${trip.id}"
+                        data-user="${userId}">
+                        📍 ${trip.location}
+                    </div>
+
+                    <div class="editable"
+                        data-field="date"
+                        data-id="${trip.id}"
+                        data-user="${userId}">
+                        📅 ${trip.date}
+                    </div>
+
+                </div>
+
+                <select class="status-select ${status}"
+                    data-id="${trip.id}"
+                    data-user="${userId}"
+                    data-status="${status}">
+
+                    <option value="planned">Planned</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="ready">Ready</option>
+                </select>
+
+            </div>
+
+            <div class="trip-actions">
+                <button class="delete-btn"
+                    data-id="${trip.id}"
+                    data-user="${userId}">
+                    Delete
+                </button>
+
+                <button class="itinerary-toggle"
+                    data-trip="${trip.id}">
+                    View Itinerary
+                </button>
+            </div>
+
+            <div class="add-itinerary-form">
+                <input placeholder="Title" id="title-${trip.id}">
+                <input placeholder="Day (e.g. Day 1)" id="day-${trip.id}">
+                <input placeholder="Time (optional)" id="time-${trip.id}">
+                <button class="add-itinerary-btn"
+                    data-trip="${trip.id}"
+                    data-user="${userId}">
+                    + Add Item
+                </button>
+            </div>
+
+            <div id="itinerary-${trip.id}" class="itinerary-box">
+                Loading...
+            </div>
+        `;
+
+        container.appendChild(div);
+
+        const select = div.querySelector("select");
+        if (select) select.value = status;
+
+        loadItinerary(userId, trip.id);
+    });
+}
+
+/* =========================
+   TOAST
 ========================= */
 function showToast(message, type = "info") {
-
     const container = document.getElementById("toast-container");
     if (!container) return;
 
@@ -73,61 +173,90 @@ function showToast(message, type = "info") {
     toast.innerText = message;
 
     container.appendChild(toast);
-
     setTimeout(() => toast.remove(), 3000);
 }
 
 /* =========================
-   LOAD USERS
+   LOAD STATS
+========================= */
+function subscribeToStats() {
+
+    const usersRef = collection(db, "users");
+
+    onSnapshot(usersRef, async (usersSnap) => {
+
+        let totalUsers = usersSnap.size;
+        let totalTrips = 0;
+        let inProgress = 0;
+        let ready = 0;
+
+        // 🔥 loop users BUT still reactive (only runs on change)
+        for (const userDoc of usersSnap.docs) {
+
+            const tripsSnap = await getDocs(
+                collection(db, "users", userDoc.id, "trips")
+            );
+
+            tripsSnap.forEach(t => {
+                const trip = t.data();
+
+                totalTrips++;
+
+                if (trip.status === "in-progress") inProgress++;
+                if (trip.status === "ready") ready++;
+            });
+        }
+
+        // update UI instantly
+        document.getElementById("statUsers").innerText = totalUsers;
+        document.getElementById("statTrips").innerText = totalTrips;
+        document.getElementById("statInProgress").innerText = inProgress;
+        document.getElementById("statReady").innerText = ready;
+    });
+}
+
+/* =========================
+   INIT USERS
 ========================= */
 document.addEventListener("DOMContentLoaded", async () => {
 
     const usersContainer = document.getElementById("usersContainer");
 
-    if (!usersContainer) {
-        showToast("Users container not found", "error");
-        return;
-    }
+    if (!usersContainer) return;
 
     try {
         const snapshot = await getDocs(collection(db, "users"));
         usersContainer.innerHTML = "";
 
-        snapshot.forEach((docSnap) => {
+        snapshot.forEach(userDoc => {
 
-            const user = docSnap.data();
-            const userId = docSnap.id;
+            const user = userDoc.data();
+            const userId = userDoc.id;
 
             const fullName =
                 `${user.firstName || ""} ${user.lastName || ""}`.trim() ||
                 user.email ||
-                "Unknown user";
+                "Unknown";
 
-            /* =========================
-               USER ROW
-            ========================= */
             const row = document.createElement("tr");
+            row.dataset.userId = userId;
 
             row.innerHTML = `
                 <td>${fullName}</td>
                 <td>${user.email || "—"}</td>
                 <td>${user.phone || "—"}</td>
                 <td>
-                    <button class="table-btn"
+                    <button class="table-btn id="createTripBtn"
                         onclick="event.stopPropagation(); selectUser('${userId}', '${fullName}')">
                         Create Trip
                     </button>
                 </td>
             `;
 
-            /* expand trips */
             row.addEventListener("click", () => toggleTrips(userId));
 
             usersContainer.appendChild(row);
 
-            /* =========================
-               TRIPS ROW
-            ========================= */
             const tripRow = document.createElement("tr");
             tripRow.id = `trips-${userId}`;
             tripRow.style.display = "none";
@@ -141,233 +270,43 @@ document.addEventListener("DOMContentLoaded", async () => {
             usersContainer.appendChild(tripRow);
         });
 
-        showToast("Users loaded", "success");
+        subscribeToStats();
 
     } catch (err) {
         console.error(err);
-        showToast("Failed to load users", "error");
     }
-
-    /* =========================
-       SEARCH USERS (FIXED)
-    ========================= */
-    const searchInput = document.getElementById("searchUsers");
-
-    if (searchInput) {
-
-        searchInput.addEventListener("input", () => {
-
-            const value = searchInput.value.toLowerCase();
-
-            const rows = usersContainer.querySelectorAll("tr");
-
-            rows.forEach(row => {
-
-                const isUserRow = row.querySelector(".table-btn");
-
-                if (!isUserRow) return;
-
-                const text = row.innerText.toLowerCase();
-
-                const match = text.includes(value);
-
-                row.style.display = match ? "" : "none";
-
-                const tripRow = row.nextElementSibling;
-
-                if (tripRow && tripRow.id?.startsWith("trips-")) {
-                    if (!match) {
-                        tripRow.style.display = "none";
-                    }
-                }
-            });
-        });
-    }
-
-    loadStats();
 });
 
+
 /* =========================
-   TOGGLE TRIPS
+   TOGGLE TRIPS (FIXED)
 ========================= */
-window.toggleTrips = async function (userId) {
+window.toggleTrips = function (userId) {
 
     const row = document.getElementById(`trips-${userId}`);
     const container = document.getElementById(`tripContainer-${userId}`);
 
     if (!row || !container) return;
 
-    const isOpen = expandedUsers[userId];
+    const isOpen = state.expanded[userId];
 
+    // CLOSE
     if (isOpen) {
-
-        container.classList.remove("open");
-
-        setTimeout(() => {
-            row.style.display = "none";
-        }, 200);
-
-        expandedUsers[userId] = false;
+        row.style.display = "none";
+        state.expanded[userId] = false;
         return;
     }
 
+    // OPEN
     row.style.display = "table-row";
+    state.expanded[userId] = true;
 
-    setTimeout(() => {
-        container.classList.add("open");
-    }, 10);
-
-    expandedUsers[userId] = true;
+    container.classList.add("open");
 
     container.innerHTML = "Loading...";
 
-    try {
-
-        const snapshot = await getDocs(
-            collection(db, "users", userId, "trips")
-        );
-
-        if (snapshot.empty) {
-            container.innerHTML = "<p style='opacity:0.6'>No trips yet</p>";
-            return;
-        }
-
-        container.innerHTML = "";
-
-        snapshot.forEach((docSnap) => {
-
-            const trip = docSnap.data();
-            const tripId = docSnap.id;
-
-            const statusClass =
-                trip.status?.toLowerCase().replace(" ", "-") || "planned";
-
-            const el = document.createElement("div");
-            el.classList.add("trip-item");
-
-            el.innerHTML = `
-                <div class="editable" 
-                    data-field="name" 
-                    data-id="${tripId}" 
-                    data-user="${userId}">
-                    <strong>${trip.name}</strong>
-                </div>
-
-                <div class="editable" 
-                    data-field="location" 
-                    data-id="${tripId}" 
-                    data-user="${userId}">
-                    ${trip.location}
-                </div>
-
-                <div class="editable" 
-                    data-field="date" 
-                    data-id="${tripId}" 
-                    data-user="${userId}">
-                    ${trip.date}
-                </div>
-
-                <select class="status-select ${statusClass}"
-                    data-id="${tripId}"
-                    data-user="${userId}">
-                    <option value="planned" ${trip.status === "planned" ? "selected" : ""}>Planned</option>
-                    <option value="in-progress" ${trip.status === "in-progress" ? "selected" : ""}>In Progress</option>
-                    <option value="ready" ${trip.status === "ready" ? "selected" : ""}>Ready</option>
-                </select>
-
-                <button class="delete-btn"
-                    data-id="${tripId}"
-                    data-user="${userId}">
-                    Delete
-                </button>
-            `;
-            container.appendChild(el);
-        });
-
-    } catch (err) {
-        console.error(err);
-        showToast("Failed to load trips", "error");
-    }
+    subscribeToTrips(userId, container);
 };
-
-/* =========================
-   SELECT USER
-========================= */
-window.selectUser = function (userId, fullName) {
-
-    selectedUserId = userId;
-    selectedUserName = fullName;
-
-    const modal = document.getElementById("tripModal");
-    const text = document.getElementById("modalUserName");
-
-    if (!modal || !text) return;
-
-    text.innerText = "User: " + fullName;
-    modal.style.display = "flex";
-};
-
-/* =========================
-   CLOSE MODAL
-========================= */
-document.getElementById("closeModal")?.addEventListener("click", () => {
-    document.getElementById("tripModal").style.display = "none";
-});
-
-/* =========================
-   CREATE TRIP
-========================= */
-document.getElementById("saveTripBtn")?.addEventListener("click", async () => {
-
-    const message = document.getElementById("modalMessage");
-
-    const name = document.getElementById("tripName").value;
-    const location = document.getElementById("tripLocation").value;
-    const date = document.getElementById("tripDate").value;
-    const people = document.getElementById("tripPeople").value;
-    const status = document.getElementById("tripStatus").value;
-
-    if (!selectedUserId) {
-        showToast("No user selected", "error");
-        return;
-    }
-
-    if (!name || !location || !date || !people) {
-        showToast("Please fill all fields", "error");
-        return;
-    }
-
-    try {
-
-        await addDoc(
-            collection(db, "users", selectedUserId, "trips"),
-            {
-                name,
-                location,
-                date,
-                people: Number(people),
-                status,
-                createdAt: new Date()
-            }
-        );
-
-        showToast(`Trip created for ${selectedUserName}`, "success");
-
-        document.getElementById("tripName").value = "";
-        document.getElementById("tripLocation").value = "";
-        document.getElementById("tripDate").value = "";
-        document.getElementById("tripPeople").value = "";
-
-        if (expandedUsers[selectedUserId]) {
-            toggleTrips(selectedUserId);
-            toggleTrips(selectedUserId);
-        }
-
-    } catch (err) {
-        console.error(err);
-        showToast("Failed to create trip", "error");
-    }
-});
 
 /* =========================
    STATUS UPDATE
@@ -378,8 +317,7 @@ document.addEventListener("change", async (e) => {
 
     const tripId = e.target.dataset.id;
     const userId = e.target.dataset.user;
-
-    const newStatus = e.target.value.toLowerCase().replace(" ", "-");
+    const newStatus = e.target.value;
 
     try {
         await updateDoc(
@@ -387,41 +325,53 @@ document.addEventListener("change", async (e) => {
             { status: newStatus }
         );
 
-        e.target.className = `status-select ${newStatus}`;
+        // update STATE first
+        const trips = state.trips[userId];
 
-        showToast("Status updated", "success");
+        if (trips) {
+            const trip = trips.find(t => t.id === tripId);
+            if (trip) trip.status = newStatus;
+        }
+
+        // update UI directly (safe now because state is source of truth)
+        const card = document.querySelector(`.trip-item[data-id="${tripId}"]`);
+
+        if (card) {
+            card.classList.remove("planned", "in-progress", "ready");
+            card.classList.add(newStatus);
+        }
+
+        e.target.classList.remove("planned", "in-progress", "ready");
+        e.target.classList.add(newStatus);
+
+        showToast("Updated", "success");
+
+        // stats will come in Step 3 (don’t touch yet)
 
     } catch (err) {
         console.error(err);
-        showToast("Status update failed", "error");
+        showToast("Update failed", "error");
     }
 });
 
 /* =========================
-   DELETE TRIP
+   DELETE TRIP (FIXED IMPORT ISSUE SAFE)
 ========================= */
 document.addEventListener("click", async (e) => {
 
     if (!e.target.classList.contains("delete-btn")) return;
 
-    const tripId = e.target.dataset.id;
     const userId = e.target.dataset.user;
+    const tripId = e.target.dataset.id;
 
-    if (!userId || !tripId) {
-        showToast("Missing IDs", "error");
-        return;
-    }
-
-    if (!confirm("Delete this trip?")) return;
+    if (!confirm("Delete trip?")) return;
 
     try {
         await deleteDoc(
             doc(db, "users", userId, "trips", tripId)
         );
 
-        showToast("Trip deleted", "success");
-
-        toggleTrips(userId);
+        showToast("Deleted", "success");
         toggleTrips(userId);
 
     } catch (err) {
@@ -430,11 +380,136 @@ document.addEventListener("click", async (e) => {
     }
 });
 
+/* =========================
+   SELECT USER
+========================= */
+window.selectUser = function (userId, name) {
+    selectedUserId = userId;
+    selectedUserName = name;
+
+    document.getElementById("tripModal").style.display = "flex";
+    document.getElementById("modalUserName").innerText = name;
+};
+
+/* =========================
+   ITINERARY TOGGLE
+========================= */
+
+document.addEventListener("click", (e) => {
+
+    if (!e.target.classList.contains("itinerary-toggle")) return;
+
+    const tripId = e.target.dataset.trip;
+    const box = document.getElementById(`itinerary-${tripId}`);
+
+    if (!box) return;
+
+    box.classList.toggle("open");
+
+    e.target.innerText = box.classList.contains("open")
+        ? "Hide Itinerary"
+        : "View Itinerary";
+});
+
+/* =========================
+   ITINERARY LOADER
+========================= */
+
+async function loadItinerary(userId, tripId) {
+
+    const container = document.getElementById(`itinerary-${tripId}`);
+    if (!container) return;
+
+    try {
+        const snap = await getDocs(
+            collection(db, "users", userId, "trips", tripId, "itinerary")
+        );
+
+        if (snap.empty) {
+            container.innerHTML = "<p style='opacity:0.6'>No itinerary yet</p>";
+            return;
+        }
+
+        container.innerHTML = "";
+
+        snap.forEach(docSnap => {
+
+            const item = docSnap.data();
+
+            const el = document.createElement("div");
+            el.className = "itinerary-item";
+
+            el.innerHTML = `
+                <strong>${item.title}</strong>
+                <div class="itinerary-meta">
+                    ${item.day} ${item.time || ""}
+                </div>
+            `;
+
+            container.appendChild(el);
+        });
+
+    } catch (err) {
+        console.error(err);
+        container.innerHTML = "Error loading itinerary";
+    }
+}
+
+/* =========================
+   ITINERARY TASK ADDER
+========================= */
+
+document.addEventListener("click", async (e) => {
+
+    if (!e.target.classList.contains("add-itinerary-btn")) return;
+
+    const tripId = e.target.dataset.trip;
+    const userId = e.target.dataset.user;
+
+    const title = document.getElementById(`title-${tripId}`).value;
+    const day = document.getElementById(`day-${tripId}`).value;
+    const time = document.getElementById(`time-${tripId}`).value;
+
+    if (!title || !day) {
+        showToast("Title and day required", "error");
+        return;
+    }
+
+    try {
+        await addDoc(
+            collection(db, "users", userId, "trips", tripId, "itinerary"),
+            {
+                title,
+                day,
+                time: time || "",
+                createdAt: new Date()
+            }
+        );
+
+        showToast("Itinerary item added", "success");
+
+        // CLEAR INPUTS
+        document.getElementById(`title-${tripId}`).value = "";
+        document.getElementById(`day-${tripId}`).value = "";
+        document.getElementById(`time-${tripId}`).value = "";
+
+        // RELOAD LIST
+        loadItinerary(userId, tripId);
+
+    } catch (err) {
+        console.error(err);
+        showToast("Failed to add item", "error");
+    }
+});
+
+/* =========================
+   INLINE EDIT SCRIPT
+========================= */
+
 const fieldConfig = {
     name: { type: "text" },
     location: { type: "text" },
-    date: { type: "date" },
-    people: { type: "number" }
+    date: { type: "date" }
 };
 
 document.addEventListener("click", (e) => {
@@ -445,10 +520,11 @@ document.addEventListener("click", (e) => {
 
     if (el.querySelector("input")) return;
 
-    const currentValue = el.innerText.trim();
     const field = el.dataset.field;
     const tripId = el.dataset.id;
     const userId = el.dataset.user;
+
+    const currentValue = el.innerText.replace(/📍|📅/g, "").trim();
 
     const config = fieldConfig[field] || { type: "text" };
 
@@ -457,17 +533,11 @@ document.addEventListener("click", (e) => {
     input.value = currentValue;
 
     input.style.width = "100%";
-    input.style.padding = "6px";
-    input.style.borderRadius = "6px";
-    input.style.border = "1px solid rgba(255,255,255,0.2)";
-    input.style.background = "rgba(0,0,0,0.4)";
-    input.style.color = "white";
 
     el.innerHTML = "";
     el.appendChild(input);
     input.focus();
 
-    /* SAVE FUNCTION */
     const save = async () => {
 
         const newValue = input.value.trim();
@@ -477,17 +547,18 @@ document.addEventListener("click", (e) => {
             return;
         }
 
-        // SHOW SAVING STATE
-        el.innerHTML = `<span style="opacity:0.6;">Saving...</span>`;
+        el.innerText = "Saving...";
 
         try {
-
             await updateDoc(
                 doc(db, "users", userId, "trips", tripId),
-                { [field]: config.type === "number" ? Number(newValue) : newValue }
+                { [field]: newValue }
             );
 
-            el.innerText = newValue;
+            // Restore icons
+            if (field === "location") el.innerText = "📍 " + newValue;
+            else if (field === "date") el.innerText = "📅 " + newValue;
+            else el.innerText = newValue;
 
             showToast("Updated", "success");
 
@@ -498,11 +569,115 @@ document.addEventListener("click", (e) => {
         }
     };
 
-    /* EVENTS */
     input.addEventListener("blur", save);
 
     input.addEventListener("keydown", (e) => {
         if (e.key === "Enter") input.blur();
         if (e.key === "Escape") el.innerText = currentValue;
     });
+});
+
+/* =========================
+   SEARCH BAR
+========================= */
+const searchInput = document.getElementById("searchUsers");
+
+if (searchInput) {
+    searchInput.addEventListener("input", () => {
+
+        const query = searchInput.value.toLowerCase().trim();
+
+        const rows = document.querySelectorAll("#usersContainer tr");
+
+        rows.forEach(row => {
+
+            // skip trip rows
+            if (row.id && row.id.startsWith("trips-")) return;
+
+            const cells = row.querySelectorAll("td");
+
+            if (cells.length < 3) return;
+
+            const name = cells[0].innerText.toLowerCase();
+            const email = cells[1].innerText.toLowerCase();
+            const phone = cells[2].innerText.toLowerCase();
+
+           const match =
+            name.startsWith(query) || // priority
+            name.includes(" " + query) || // last name match
+            email.startsWith(query) ||
+            phone.startsWith(query);
+
+            row.style.display = match ? "" : "none";
+
+            // hide trip row if user hidden
+            const userId = row.dataset.userId;
+            const tripRow = document.getElementById(`trips-${userId}`);
+
+            if (!match && tripRow) {
+                tripRow.style.display = "none";
+            }
+        });
+    });
+}
+
+/* =========================
+   CREATE TRIP
+========================= */
+
+// FIRESTORE WRITE
+
+async function createTrip(userId, tripData) {
+
+    try {
+        await addDoc(
+            collection(db, "users", userId, "trips"),
+            {
+                name: tripData.name,
+                location: tripData.location,
+                date: tripData.date,
+                status: "planned",
+                createdAt: new Date()
+            }
+        );
+
+        showToast("Trip created", "success");
+
+    } catch (err) {
+        console.error(err);
+        showToast("Failed to create trip", "error");
+    }
+}
+
+// BUTTON HANDLER
+
+document.getElementById("createTripBtn")?.addEventListener("click", async () => {
+
+    const name = document.getElementById("tripName").value.trim();
+    const location = document.getElementById("tripLocation").value.trim();
+    const date = document.getElementById("tripDate").value;
+
+    if (!name || !location || !date) {
+        showToast("Fill in all fields", "error");
+        return;
+    }
+
+    if (!selectedUserId) {
+        showToast("No user selected", "error");
+        return;
+    }
+
+    await createTrip(selectedUserId, {
+        name,
+        location,
+        date
+    });
+
+    // clear inputs
+    document.getElementById("tripName").value = "";
+    document.getElementById("tripLocation").value = "";
+    document.getElementById("tripDate").value = "";
+
+    // close modal
+    document.getElementById("tripModal").style.display = "none";
 });
